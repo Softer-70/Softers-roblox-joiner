@@ -1,50 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Roblox Join</title>
-  <style>
-    body { 
-      font-family: sans-serif; 
-      background: #111; 
-      color: #eee; 
-      text-align: center; 
-      padding-top: 10%; 
-    }
-    a { color: #00b7ff; text-decoration: none; }
-    small { color: #888; }
-  </style>
+	<meta charset="utf-8">
+	<title>Joining Roblox</title>
+	<script>
+		window.onload = function()
+		{
+			const params = new URLSearchParams(window.location.search);
+			const placeId = params.get('placeId');
+			const gameInstanceId = params.get('gameInstanceId');
+
+			if (placeId && gameInstanceId)
+			{
+				window.location.href = `roblox://placeID=${placeId}&gameInstanceId=${gameInstanceId}`;
+			}
+			else
+			{
+				document.body.textContent = "Error: Missing Place ID or Game Instance ID.";
+			}
+		};
+	</script>
 </head>
-<body>
-  <h1>🔗 Roblox Join</h1>
-  <p id="status">Processing...</p>
-
-  <script>
-    // Получаем параметры из URL
-    const params = new URLSearchParams(window.location.search);
-    const placeId = params.get("placeId");
-    const jobId = params.get("gameInstanceId") || params.get("jobId");
-
-    if (placeId && jobId) {
-      // Прямая ссылка на Roblox клиент
-      const clientUrl = `roblox-player://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
-
-      // Минимальная веб-запасная ссылка (если клиент не открылся)
-      const fallbackUrl = `https://www.roblox.com/games/start?placeId=${placeId}&launchData=${encodeURIComponent(placeId + "/" + jobId)}`;
-
-      // Попытка открыть Roblox клиент сразу
-      window.location.href = clientUrl;
-
-      // Спустя 1 секунду — запасной вариант через браузер
-      setTimeout(() => { window.location.href = fallbackUrl; }, 1000);
-
-      document.getElementById("status").innerHTML =
-        `🕹 Attempting to join <b>${placeId}</b><br><small>JobId: ${jobId}</small>`;
-    } else {
-      document.getElementById("status").innerHTML =
-        "❌ Missing placeId or gameInstanceId in URL.<br>Example:<br><code>?placeId=12345&gameInstanceId=abc-def-ghi</code>";
-    }
-  </script>
-</body>
+<body></body>
 </html>
-
